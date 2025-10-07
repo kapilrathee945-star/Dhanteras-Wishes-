@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🙏 Happy Dhanteras Wishes 🙏</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Merriweather', serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffe0b2, #fff9c4); /* Light gold to light yellow gradient */
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffcc80;
+        }
+
+        /* Ad Slot Styling to center the banner */
+        .ad-banner-slot {
+            margin: 15px auto;
+            max-width: 468px; /* Ad width */
+            text-align: center;
+        }
+
+        /* Wish Message Area */
+        #animation-area {
+            min-height: 180px;
+            margin-bottom: 25px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #wish-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2em;
+            color: #d4af37;
+            margin-bottom: 10px;
+            display: none;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation-duration: 1.5s;
+        }
+
+        .sender-name {
+            font-family: 'Merriweather', serif;
+            font-size: 1.7em;
+            color: #4CAF50;
+            margin-top: 5px;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        #laxmi-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+
+        /* Form/Input Styling */
+        #input-section {
+            margin-top: 20px;
+        }
+
+        #input-prompt {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            margin-right: 10px;
+            border: 2px solid #ffcc80;
+            border-radius: 8px;
+            width: 70%;
+            max-width: 320px;
+            font-size: 1em;
+            background-color: #fffaf0;
+            margin-bottom: 15px;
+        }
+
+        /* WhatsApp Button Style */
+        #whatsapp-button {
+            display: block;
+            margin: 0 auto;
+            width: 80%;
+            max-width: 300px;
+            padding: 12px 20px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        #whatsapp-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        
+        #whatsapp-button i {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        #link-output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #ff9800;
+            background-color: #fff3e0;
+            border-radius: 8px;
+            word-wrap: break-word;
+            text-align: left;
+            display: none;
+        }
+
+        /* Keyframe Animations */
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80%, 100% {
+                transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            }
+            0% { opacity: 0; transform: scale3d(.3, .3, .3); }
+            20% { transform: scale3d(1.1, 1.1, 1.1); }
+            40% { transform: scale3d(.9, .9, .9); }
+            60% { opacity: 1; transform: scale3d(1.03, 1.03, 1.03); }
+            80% { transform: scale3d(.97, .97, .97); }
+            100% { opacity: 1; transform: scale3d(1, 1, 1); }
+        }
+
+        .animate-bounce {
+            animation: bounceIn 1.5s forwards;
+            display: block !important;
+        }
+
+        /* Firecracker Styling */
+        .firecracker-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .firecracker {
+            position: absolute;
+            background: radial-gradient(white, gold, orange, red);
+            border-radius: 50%;
+            opacity: 0;
+            animation: explode 1.5s forwards;
+            filter: blur(1px);
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            20% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.1); opacity: 0; transform: translateY(50px); }
+        }
+
+        .particle {
+            position: absolute;
+            background-color: #ffeb3b;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFadeOut 1s forwards;
+        }
+
+        @keyframes particleFadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.1); }
+        }
+
+    </style>
+</head>
+<body>
+    <script type='text/javascript' src='//pl27793075.revenuecpmgate.com/9a/a2/af/9aa2afca19f997cd7923be46abe33acf.js'></script>
+    <div class="ad-banner-slot">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '464362a618edf4625e42108edbd94f91',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/464362a618edf4625e42108edbd94f91/invoke.js"></script>
+    </div>
+    <div class="container">
+        <div id="animation-area">
+            <div id="wish-message">Happy Dhanteras</div>
+            <div id="sender-display" class="sender-name"></div>
+            <div class="firecracker-container" id="firecracker-zone"></div>
+        </div>
+        
+        <img id="laxmi-image" src="laxmi1.gif" alt="Goddess Lakshmi Animation">
+
+        <div id="input-section">
+            <p id="input-prompt">अपना नाम लिखें और शुभ लिंक WhatsApp पर शेयर करें:</p>
+            <input type="text" id="user-name" placeholder="आपका शुभ नाम">
+            
+            <button id="whatsapp-button" onclick="shareOnWhatsApp()">
+                <i class="fab fa-whatsapp"></i> WhatsApp पर भेजें
+            </button>
+
+            <div id="link-output">
+                <p>यह शुभ लिंक:</p>
+                <a id="generated-link" href="#" target="_blank"></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const FIRECRACKER_COUNT = 15;
+        const PARTICLE_COUNT = 25;
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const params = new URLSearchParams(window.location.search);
+            const senderName = params.get('name');
+            const wishMessageDiv = document.getElementById('wish-message');
+            const senderDisplayDiv = document.getElementById('sender-display');
+            const inputPrompt = document.getElementById('input-prompt');
+
+            if (senderName) {
+                document.title = `🙏 Dhanteras Wishes from ${decodeURIComponent(senderName)} 🙏`;
+                
+                // Display wish and sender name
+                senderDisplayDiv.textContent = `from ${decodeURIComponent(senderName)}! ✨`;
+                
+                // Animate the main message and show firecrackers
+                setTimeout(() => {
+                    wishMessageDiv.classList.add('animate-bounce');
+                    triggerFirecrackers();
+                }, 500); 
+                
+                // Update input prompt for the receiver
+                inputPrompt.textContent = 'आप भी अपना शुभ नाम लिखकर यह लिंक WhatsApp पर शेयर करें:';
+            } else {
+                wishMessageDiv.style.display = 'none';
+                senderDisplayDiv.style.display = 'none';
+            }
+        });
+
+        function shareOnWhatsApp() {
+            const userNameInput = document.getElementById('user-name').value.trim();
+            if (userNameInput === "") {
+                alert("Kripya apna shubh naam likhein!");
+                return;
+            }
+
+            // 1. Link Generation
+            const baseUrl = window.location.origin + window.location.pathname;
+            const encodedName = encodeURIComponent(userNameInput);
+            const newLink = `${baseUrl}?name=${encodedName}`;
+
+            // 2. WhatsApp Message Text
+            const message = encodeURIComponent(`आपको और आपके परिवार को Happy Dhanteras की हार्दिक शुभकामनाएँ!
+यह शुभ संदेश ${userNameInput} ने आपको भेजा है।
+आप भी इस लिंक पर क्लिक करके शुभकामनाएँ भेजें:
+${newLink}`);
+
+            // 3. Open WhatsApp Share Link
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
+            
+            // Open in a new tab/window for better user experience
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function triggerFirecrackers() {
+            const firecrackerZone = document.getElementById('firecracker-zone');
+            firecrackerZone.innerHTML = '';
+
+            for (let i = 0; i < FIRECRACKER_COUNT; i++) {
+                const firecracker = document.createElement('div');
+                firecracker.classList.add('firecracker');
+                
+                // Random position
+                firecracker.style.left = `${Math.random() * 80 + 10}%`;
+                firecracker.style.top = `${Math.random() * 50 + 20}%`;
+
+                firecrackerZone.appendChild(firecracker);
+                
+                // Add particles for a more elaborate explosion
+                for (let j = 0; j < PARTICLE_COUNT; j++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const size = Math.random() * 5 + 3;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random starting position near firecracker center
+                    const startX = parseFloat(firecracker.style.left);
+                    const startY = parseFloat(firecracker.style.top);
+                    particle.style.left = `${startX}%`;
+                    particle.style.top = `${startY}%`;
+
+                    // Random direction and distance for particles
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 50 + 20;
+                    
+                    // Calculate end position (using transform for smooth movement)
+                    const endX = Math.cos(angle) * distance;
+                    const endY = Math.sin(angle) * distance;
+
+                    particle.style.transform = `translate(${endX}px, ${endY}px)`;
+                    particle.style.animationDelay = `${Math.random() * 0.5}s`;
+                    
+                    firecrackerZone.appendChild(particle);
+                }
+            }
+        }
+    </script>
+    
+    <div class="ad-banner-slot">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '464362a618edf4625e42108edbd94f91',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/464362a618edf4625e42108edbd94f91/invoke.js"></script>
+    </div>
+    </body>
+</html>
