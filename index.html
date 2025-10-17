@@ -11,7 +11,7 @@
         body {
             font-family: 'Merriweather', serif;
             text-align: center;
-            background: linear-gradient(to bottom, #ffe0b2, #fff9c4); /* Light gold to light yellow gradient */
+            background: linear-gradient(to bottom, #ffe0b2, #fff9c4);
             margin: 0;
             padding: 20px;
             overflow-x: hidden;
@@ -31,9 +31,30 @@
         /* Ad Slot Styling to center the banner */
         .ad-banner-slot {
             margin: 15px auto;
-            max-width: 468px; /* Ad width */
+            max-width: 468px;
             text-align: center;
         }
+
+        /* Music Play Button Styling */
+        #music-button {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 15px;
+            background-color: #ff5722; /* Deep Orange */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #music-button:hover {
+            background-color: #e64a19;
+        }
+
 
         /* Wish Message Area */
         #animation-area {
@@ -126,18 +147,7 @@
             font-size: 1.2em;
         }
 
-        #link-output {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px dashed #ff9800;
-            background-color: #fff3e0;
-            border-radius: 8px;
-            word-wrap: break-word;
-            text-align: left;
-            display: none;
-        }
-
-        /* Keyframe Animations */
+        /* Animations and Firecrackers are same as before */
         @keyframes bounceIn {
             0%, 20%, 40%, 60%, 80%, 100% {
                 transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
@@ -155,7 +165,6 @@
             display: block !important;
         }
 
-        /* Firecracker Styling */
         .firecracker-container {
             position: absolute;
             width: 100%;
@@ -197,6 +206,11 @@
     </style>
 </head>
 <body>
+    <audio id="dhanteras-song" loop muted>
+        <source src="Dhanteras_Song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
     <script type='text/javascript' src='//pl27793075.revenuecpmgate.com/9a/a2/af/9aa2afca19f997cd7923be46abe33acf.js'></script>
     <div class="ad-banner-slot">
         <script type="text/javascript">
@@ -211,6 +225,10 @@
         <script type="text/javascript" src="//www.highperformanceformat.com/464362a618edf4625e42108edbd94f91/invoke.js"></script>
     </div>
     <div class="container">
+        <button id="music-button" onclick="toggleMusic()">
+            <i class="fas fa-volume-up"></i> Gaana Chalao (Click to start music and wishes)
+        </button>
+
         <div id="animation-area">
             <div id="wish-message">Happy Dhanteras</div>
             <div id="sender-display" class="sender-name"></div>
@@ -226,11 +244,6 @@
             <button id="whatsapp-button" onclick="shareOnWhatsApp()">
                 <i class="fab fa-whatsapp"></i> WhatsApp पर भेजें
             </button>
-
-            <div id="link-output">
-                <p>यह शुभ लिंक:</p>
-                <a id="generated-link" href="#" target="_blank"></a>
-            </div>
         </div>
     </div>
 
@@ -238,32 +251,73 @@
         // Constants
         const FIRECRACKER_COUNT = 15;
         const PARTICLE_COUNT = 25;
+        const song = document.getElementById('dhanteras-song');
+        const musicButton = document.getElementById('music-button');
+        let musicStarted = false;
+
+        // Function to handle music playback and wish visibility
+        function toggleMusic() {
+            if (!musicStarted) {
+                // Play music and unmute
+                song.muted = false;
+                // Since we used autoplay muted in HTML, we just need to try playing and unmuting.
+                // In some browsers, we might still need a play() call.
+                const playPromise = song.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Playback started successfully
+                    }).catch(error => {
+                        // Playback failed (e.g., if user interaction was still blocked)
+                        console.log("Music play failed:", error);
+                    });
+                }
+                
+                musicStarted = true;
+                musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Music ON';
+                musicButton.style.backgroundColor = '#4CAF50'; // Green when playing
+
+                // Trigger main wishes visibility and firecrackers immediately after music starts
+                const params = new URLSearchParams(window.location.search);
+                const senderName = params.get('name');
+                if (senderName) {
+                    // Animate the main message and show firecrackers only after music interaction
+                    const wishMessageDiv = document.getElementById('wish-message');
+                    const senderDisplayDiv = document.getElementById('sender-display');
+                    wishMessageDiv.classList.add('animate-bounce');
+                    triggerFirecrackers();
+                }
+
+            } else {
+                // Stop/Pause music
+                song.pause();
+                musicStarted = false;
+                musicButton.innerHTML = '<i class="fas fa-volume-mute"></i> Music OFF';
+                musicButton.style.backgroundColor = '#ff5722';
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', (event) => {
             const params = new URLSearchParams(window.location.search);
             const senderName = params.get('name');
-            const wishMessageDiv = document.getElementById('wish-message');
             const senderDisplayDiv = document.getElementById('sender-display');
             const inputPrompt = document.getElementById('input-prompt');
 
             if (senderName) {
                 document.title = `🙏 Dhanteras Wishes from ${decodeURIComponent(senderName)} 🙏`;
-                
-                // Display wish and sender name
                 senderDisplayDiv.textContent = `from ${decodeURIComponent(senderName)}! ✨`;
-                
-                // Animate the main message and show firecrackers
-                setTimeout(() => {
-                    wishMessageDiv.classList.add('animate-bounce');
-                    triggerFirecrackers();
-                }, 500); 
-                
-                // Update input prompt for the receiver
                 inputPrompt.textContent = 'आप भी अपना शुभ नाम लिखकर यह लिंक WhatsApp पर शेयर करें:';
             } else {
-                wishMessageDiv.style.display = 'none';
+                // Initial state: hide wishes, show music button
+                document.getElementById('wish-message').style.display = 'none';
                 senderDisplayDiv.style.display = 'none';
             }
+
+            // Attempt to autoplay muted music (modern browser policy compliance)
+            song.play().catch(error => {
+                // Autoplay blocked, keep button visible.
+                console.log("Autoplay muted blocked.");
+            });
         });
 
         function shareOnWhatsApp() {
@@ -286,8 +340,6 @@ ${newLink}`);
 
             // 3. Open WhatsApp Share Link
             const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
-            
-            // Open in a new tab/window for better user experience
             window.open(whatsappUrl, '_blank');
         }
 
@@ -299,13 +351,11 @@ ${newLink}`);
                 const firecracker = document.createElement('div');
                 firecracker.classList.add('firecracker');
                 
-                // Random position
                 firecracker.style.left = `${Math.random() * 80 + 10}%`;
                 firecracker.style.top = `${Math.random() * 50 + 20}%`;
 
                 firecrackerZone.appendChild(firecracker);
                 
-                // Add particles for a more elaborate explosion
                 for (let j = 0; j < PARTICLE_COUNT; j++) {
                     const particle = document.createElement('div');
                     particle.classList.add('particle');
@@ -313,17 +363,14 @@ ${newLink}`);
                     particle.style.width = `${size}px`;
                     particle.style.height = `${size}px`;
                     
-                    // Random starting position near firecracker center
                     const startX = parseFloat(firecracker.style.left);
                     const startY = parseFloat(firecracker.style.top);
                     particle.style.left = `${startX}%`;
                     particle.style.top = `${startY}%`;
 
-                    // Random direction and distance for particles
                     const angle = Math.random() * Math.PI * 2;
                     const distance = Math.random() * 50 + 20;
                     
-                    // Calculate end position (using transform for smooth movement)
                     const endX = Math.cos(angle) * distance;
                     const endY = Math.sin(angle) * distance;
 
